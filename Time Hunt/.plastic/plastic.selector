@@ -1,0 +1,3 @@
+repository "Time Hunt/Time Hunt@4673184606814@cloud"
+  path "/"
+    smartbranch "/main/Develop"
