@@ -5,6 +5,7 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     Rigidbody2D rb;
+    Animator anim;
 
     private float inputHorizontal;
     [SerializeField] private float speed;
@@ -17,10 +18,14 @@ public class Movement : MonoBehaviour
 
     private DirectionPlayer directionPlayer;
 
+    private bool canUseDash = true;
+    private bool usingDash = false;
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
         directionPlayer = DirectionPlayer.Right;
     }
 
@@ -49,6 +54,11 @@ public class Movement : MonoBehaviour
             }
         }
 
+        if (Input.GetKeyDown(KeyCode.C) && canUseDash)
+        {
+            StartCoroutine(Dash());
+        }
+
         if(inputHorizontal > 0)
         {
             FlipPlayer(DirectionPlayer.Right);
@@ -57,10 +67,14 @@ public class Movement : MonoBehaviour
         {
             FlipPlayer(DirectionPlayer.Left);
         }
+
+        anim.SetBool("Run", inputHorizontal != 0);
+        anim.SetBool("IsOnGround", isGrounded);
     }
 
     void FixedUpdate()
     {
+        if(!usingDash)     
         rb.velocity = new Vector2(inputHorizontal * speed, rb.velocity.y);
     }
 
@@ -68,6 +82,8 @@ public class Movement : MonoBehaviour
     {
         rb.velocity = Vector2.zero;
         rb.AddForce(Vector2.up * 300f);
+
+        anim.SetTrigger("Jump");
     }
 
     private void FlipPlayer(DirectionPlayer direction)
@@ -87,6 +103,33 @@ public class Movement : MonoBehaviour
         {
             transform.eulerAngles = new Vector3(0, 180, 0);
         }
+    }
+
+    private IEnumerator Dash()
+    {
+        canUseDash = false;
+        usingDash = true;
+
+        rb.velocity = Vector2.zero;
+        rb.gravityScale = 0;
+
+        if (directionPlayer == DirectionPlayer.Right)
+        {
+            rb.AddForce(Vector2.right * 20f, ForceMode2D.Impulse);
+        }
+        else
+        {
+            rb.AddForce(Vector2.left * 20f, ForceMode2D.Impulse);
+        }
+
+        yield return new WaitForSeconds(0.3f);
+
+        usingDash = false;
+        rb.gravityScale = 1;
+        rb.velocity = Vector2.zero;
+
+        yield return new WaitForSeconds(3);
+        canUseDash = true;
     }
 }
 

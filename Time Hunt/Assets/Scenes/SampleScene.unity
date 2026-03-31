@@ -11232,6 +11232,7 @@ GameObject:
   - component: {fileID: 1626483126}
   - component: {fileID: 1626483125}
   - component: {fileID: 1626483124}
+  - component: {fileID: 1626483129}
   - component: {fileID: 1626483128}
   m_Layer: 0
   m_Name: Character
@@ -11276,7 +11277,7 @@ CapsuleCollider2D:
   m_GameObject: {fileID: 1626483123}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 8e10932b17e786d40b050788497b66e0, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -11387,6 +11388,27 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
+--- !u!95 &1626483129
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1626483123}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d6bbdd6b54a23f74ea54b93c6c73a8a0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1640101668
 GameObject:
   m_ObjectHideFlags: 0
