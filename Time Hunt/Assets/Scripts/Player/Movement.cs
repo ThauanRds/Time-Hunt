@@ -6,9 +6,12 @@ public class Movement : MonoBehaviour
 {
     Rigidbody2D rb;
     Animator anim;
+    [SerializeField] private PlayerUI playerUI;
 
-    private float inputHorizontal;
+    [Header("Movement Settings: ")]
     [SerializeField] private float speed;
+    private float inputHorizontal;
+    private DirectionPlayer directionPlayer;
 
     [Header("Jump Settings: ")]
     [SerializeField] private Transform groundCheck;
@@ -16,8 +19,8 @@ public class Movement : MonoBehaviour
     private bool isGrounded;
     private bool extraJump;
 
-    private DirectionPlayer directionPlayer;
-
+    [Header("Dash Settings: ")]
+    [SerializeField] private TrailRenderer trailRenderer;
     private bool canUseDash = true;
     private bool usingDash = false;
 
@@ -27,6 +30,8 @@ public class Movement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         directionPlayer = DirectionPlayer.Right;
+
+        trailRenderer.emitting = false;
     }
 
     // Update is called once per frame
@@ -107,6 +112,7 @@ public class Movement : MonoBehaviour
 
     private IEnumerator Dash()
     {
+        trailRenderer.emitting = true;
         canUseDash = false;
         usingDash = true;
 
@@ -124,11 +130,19 @@ public class Movement : MonoBehaviour
 
         yield return new WaitForSeconds(0.3f);
 
+        trailRenderer.emitting = false;
         usingDash = false;
         rb.gravityScale = 1;
         rb.velocity = Vector2.zero;
 
-        yield return new WaitForSeconds(3);
+        float timer = 0;
+        while (timer < 3)
+        {
+            timer += Time.deltaTime;
+            playerUI.UpdateDashProgress(timer / 3);
+            yield return null;
+        }
+
         canUseDash = true;
     }
 }
