@@ -110,4 +110,10 @@ public class GenericEnemyMoviment : EnemyStates
             transform.eulerAngles = new Vector3(0, 180, 0);
         }
     }
+
+    public void SetFollow()
+    {
+        playerInRange = true;
+    }
+
 }
