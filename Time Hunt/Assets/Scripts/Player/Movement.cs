@@ -10,6 +10,7 @@ public class Movement : MonoBehaviour
 
     [Header("Movement Settings: ")]
     [SerializeField] private float speed;
+    private float originalSpeed;
     private float inputHorizontal;
     private DirectionPlayer directionPlayer;
 
@@ -32,6 +33,7 @@ public class Movement : MonoBehaviour
         directionPlayer = DirectionPlayer.Right;
 
         trailRenderer.emitting = false;
+        originalSpeed = speed;
     }
 
     // Update is called once per frame
@@ -48,11 +50,11 @@ public class Movement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if(isGrounded)
+            if (isGrounded)
             {
                 Jump();
             }
-            else if(extraJump)
+            else if (extraJump)
             {
                 extraJump = false;
                 Jump();
@@ -64,11 +66,11 @@ public class Movement : MonoBehaviour
             StartCoroutine(Dash());
         }
 
-        if(inputHorizontal > 0)
+        if (inputHorizontal > 0)
         {
             FlipPlayer(DirectionPlayer.Right);
         }
-        else if(inputHorizontal < 0)
+        else if (inputHorizontal < 0)
         {
             FlipPlayer(DirectionPlayer.Left);
         }
@@ -79,8 +81,8 @@ public class Movement : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(!usingDash)     
-        rb.velocity = new Vector2(inputHorizontal * speed, rb.velocity.y);
+        if (!usingDash)
+            rb.velocity = new Vector2(inputHorizontal * speed, rb.velocity.y);
     }
 
     void Jump()
@@ -93,7 +95,7 @@ public class Movement : MonoBehaviour
 
     private void FlipPlayer(DirectionPlayer direction)
     {
-        if(direction == directionPlayer)
+        if (direction == directionPlayer)
         {
             return;
         }
@@ -145,6 +147,17 @@ public class Movement : MonoBehaviour
 
         canUseDash = true;
     }
+
+    public void IncreseSpeed()
+    {
+        speed = originalSpeed * 1.5f;
+    }
+
+    public void ResetSpeed()
+    {
+        speed = originalSpeed;
+    }
+
 }
 
 enum DirectionPlayer 

@@ -12,11 +12,13 @@ public class Attack : MonoBehaviour
     [Header("Attack Settings: ")]
     [SerializeField] private Hitbox hitbox;
     [SerializeField] private int damage = 30;
+    private int originalDamageSword;
 
     [Header("Spell Settings: ")]
     [SerializeField] private FireBall fireBallPrefab;
     [SerializeField] private Transform spawnPoint;
-    private int spellDamage = 50;
+    [SerializeField] private int spellDamage = 50;
+    private int originalDamageSpell;
 
     private bool canAttack = true;
     private bool canSpeel = true;
@@ -27,6 +29,9 @@ public class Attack : MonoBehaviour
     void Start()
     {
         anim = GetComponent<Animator>();
+
+        originalDamageSword = damage;
+        originalDamageSpell = spellDamage;
     }
 
     // Update is called once per frame
@@ -78,5 +83,17 @@ public class Attack : MonoBehaviour
         }
 
         canSpeel = true;
+    }
+
+    public void IncreseAttackDamage()
+    {
+        damage = originalDamageSword * 2;
+        spellDamage = originalDamageSpell * 2;
+    }
+
+    public void ResetDamage()
+    {
+        damage = originalDamageSword;
+        spellDamage = originalDamageSpell;
     }
 }
