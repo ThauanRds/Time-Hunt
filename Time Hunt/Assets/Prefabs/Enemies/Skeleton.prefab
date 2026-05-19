@@ -549,6 +549,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dieFX: {fileID: 8247303414808941122, guid: bf04c45ae2be45543bd53c16420cf168, type: 3}
+  extraTime: 10
 --- !u!114 &6446263264511739501
 MonoBehaviour:
   m_ObjectHideFlags: 0
